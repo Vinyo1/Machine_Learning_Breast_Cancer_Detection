@@ -59,6 +59,9 @@ Class distribution: 357 benign, 212 malignant
     git clone https://github.com/Vinyo1/Machine_Learning_Breast_Cancer_Detection.git
     cd Machine_Learning_Breast_Cancer_Detection
     ```
+2. Follow the steps in the notebook to reproduce the analysis.
+## Contributing
+I welcome contributions! Please see `CONTRIBUTING.md` for more details.
 
 ## STEP 1 - Data Preprocessing and Dealing With Missing Values
 ```python
@@ -127,41 +130,113 @@ data.head()
         compare_models = pd.concat([lr_results, rf_results], axis=0).reset_index(drop=True)
         compare_models.style.background_gradient(cmap='Blues')
 ```
+### 2d Verifying True Confusion Matrix
+```python
+    conf_mat = confusion_matrix(y_test, y_pred)
+    conf_mat
+```
+## STEP 3 - Hyper Parameter Tuning Using Randomized SearchCV and GridSearchCV
+``` python
+    accuracies = cross_val_score(estimator = rf, X = X_train, y = y_train, cv = 10)
+    print(accuracies)
+```
+### 3a - Randomizing Search To Find The Best Parameters For Logistic Regression
+```python
+    from sklearn.model_selection import RandomizedSearchCV
+    parameters = {'penalty': ['l1', 'l2', 'elasticnet', 'none'],
+    'C': [0.25, 0.50, 0.75, 1, 1.25, 1.50, 2.0],
+    'solver': ['newton-cg', 'lbfgs', 'liblinear', 'sag', 'saga']}
+    # defining an instance
+    random_search = RandomizedSearchCV(estimator=lr, param_distributions=parameters, n_iter=10, scoring='roc_auc', n_jobs= -1, verbose= 3, cv=10, random_state=42)
+    random_search.fit(X_train, y_train)
+    #Finding the best score
+    random_search.best_score_
+    #Finding the best parameters
+    random_search.best_params_
+```
+### 3b - GridSearch Cv to Find The Best Parameters For Logistic Regression
+    from sklearn.model_selection import GridSearchCV
+
+# Define the parameter grid for GridSearchCV
+```python
+    param_grid = {
+        'penalty': ['l1', 'l2', 'elasticnet', 'none'],
+        'C': [0.25, 0.50, 0.75, 1, 1.25, 1.50, 2.0],
+        'solver': ['newton-cg', 'lbfgs', 'liblinear', 'sag', 'saga'],
+        'max_iter': [100, 1000, 2500, 5000]
+    }
+    
+    
+    # Set up the grid search
+    grid_search = GridSearchCV(estimator=lr, param_grid=param_grid, scoring='roc_auc',
+                               n_jobs=-1, verbose=3, cv=10)
+    
+    # Fit the grid search to the data
+    grid_search.fit(X_train, y_train)
+    
+    # Print the best parameters and score
+    print("Best parameters:", grid_search.best_params_)
+    print("Best score:", grid_search.best_score_)
+    print("Best estimator:", grid_search.best_estimator_)
+```
+## Step 4 - Part 4 Deciding on The Model - Logistic Regression
+```python
+    # Selecting the best parameters for the Logistic Regression-(gRIDsEARCHCV Parameters)
+    from sklearn.linear_model import LogisticRegression
+    final_lr = LogisticRegression(C=0.25, penalty='l2',  max_iter =  100, solver='liblinear')
+    final_lr.fit(X_train, y_train)
+    y_pred = lr.predict(X_test)
+    #Analyze perfomance of logistic model
+    from sklearn.metrics import accuracy_score, f1_score, roc_auc_score, recall_score, precision_score
+    acc = accuracy_score(y_test, y_pred)
+    f1 = f1_score(y_test, y_pred)
+    recall = recall_score(y_test, y_pred)
+    precision = precision_score(y_test, y_pred)
+    roc_auc = roc_auc_score(y_test, y_pred)
+    final_regression_results = pd.DataFrame([['Final Logistic Regression', acc, f1, recall, precision, roc_auc]], columns = ['Model', 'Accuracy',
+    'F1 Score', 'Recall', 'Precision', 'ROC_AUC'])
+```
+## Step 5 - Comparing The Report of All Three Models
+```python
+    # Comparing Models
+    final_results = pd.concat([lr_results, rf_results, final_regression_results], axis=0).reset_index(drop=True)
+    final_results.style.background_gradient(cmap='Blues')
+```
+### 5a - Cross Validation 
+```python
+    accuracies = cross_val_score(estimator = final_lr, X = X_train, y = y_train, cv = 10)
+    print(accuracies)
+    print('Accuracy: {:.2f} %'.format(accuracies.mean()*100))
+    print('Standard Deviation: {:.2f} %'.format(accuracies.std()*100))
+```
 
 - Summary statistics
   ``` data.describe() ```
-- Data visualization (histograms, scatter plots, etc.)
-- Key findings
 
-## Data Preprocessing
-- Handling missing values
-- Feature scaling using StandardScaler
-- Encoding categorical variables (if any)
 
-## Modeling
-- Logistic Regression
-- Decision Tree
-- Random Forest
-- Hyperparameter tuning using GridSearchCV
-- Evaluation metrics: accuracy, precision, recall, F1 score
+## Findings and Conclusion
+Best performing model was the Logistic regression model it had an **accuracy of 97.36 %** and a **Standard Deviation of 1.93 %**
+The random forest model had an **accuracy of 96.26 % and a Standard Deviation of 2.41 %**
+After hyper parameter tuning, the best parameter was 
+```python
+    # Selecting the best parameters for the Logistic Regression-(gRIDsEARCHCV Parameters)
+    from sklearn.linear_model import LogisticRegression
+    final_lr = LogisticRegression(C=0.25, penalty='l2',  max_iter =  100, solver='liblinear')
+```
+This gave an **accuracy of 98.02 %** and a **Standard Deviation of 1.54 %**
+|S/N |Model |Accuracy |F1 Score	|Recall	|Precision	|ROC_AUC
+|----|----|----|----|----|----|----|
+|0	|Logistic Regression	|0.973684	|0.964706	|0.953488	|0.976190	|0.969702
+|1	|Random Forest	|0.964912	|0.952381	|0.930233	|0.975610	|0.958074
+|2	|Final Logistic Regression	|0.991228	|0.988235	|0.976744	|1.000000	|0.988372
 
-## Results
-- Model performance comparison
-- Confusion matrix
-- Best performing model
+#### Key takeaways from the analysis
+- Apart from fractal_dimension_mean, texture_se, smoothness_se, symmetry_se, all other features are postively corelated with the target variable.
 
-## Conclusion
-- Key takeaways from the analysis
-- Potential improvements and future work
+Potential improvements and future work
 
-## How to Use
-1. Run the Jupyter notebook:
-    ```bash
-    jupyter notebook Breast_Cancer_Analysis.ipynb
-    ```
-2. Follow the steps in the notebook to reproduce the analysis.
-## Contributing
-I welcome contributions! Please see `CONTRIBUTING.md` for more details.
+
+
 
 ## License
 This project is licensed under the MIT License.
