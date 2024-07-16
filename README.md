@@ -1,6 +1,6 @@
 # Breast Cancer Wisconsin (Diagnostic) Data Analysis
 ## Table of Content
-- [Data Description](https://github.com/Vinyo1/Machine_Learning_Breast_Cancer_Detection/edit/main/README.md/DataDescription)
+- [Data Description](https://github.com/Vinyo1/Machine_Learning_Breast_Cancer_Detection/edit/main/README.md/Data-Description)
 ## Introduction
 This project involves an analysis of the Breast Cancer Wisconsin (Diagnostic) Data Set to predict whether the cancer is benign or malignant using various machine learning techniques.
 
