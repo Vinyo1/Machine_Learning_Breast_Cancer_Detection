@@ -233,14 +233,19 @@ This gave an **accuracy of 98.02 %** and a **Standard Deviation of 1.54 %**
 #### Key takeaways from the analysis
 - Apart from fractal_dimension_mean, texture_se, smoothness_se, symmetry_se, all other features are postively corelated with the target variable.
 
-Potential improvements and future work
-
+#### Potential improvements and future work
+- Consider dimensionality reduction techniques like PCA (Principal Component Analysis) to reduce the number of features while retaining most of the variance.
+- Perform more exhaustive hyperparameter tuning using techniques like Grid Search or Random Search with cross-validation to find the optimal model parameters
+- Combine multiple models to create an ensemble (e.g., using techniques like bagging, boosting, or stacking) which can often result in better performance than individual models.
+- Implement anomaly detection algorithms to identify and handle outliers more effectively, which can improve model performance.
+- Regularly audit the model for fairness and ethical considerations.
 
 
 
 ## License
-This project is licensed under the MIT License.
+This project is licensed under the MIT License. See the [Lincense](url) file for more details.
+
 
 ## Acknowledgments
 - [Kaggle](https://www.kaggle.com) for providing the dataset and an indepth description about the dataset
-- Contributors and maintainers of the libraries used in this project.
+
