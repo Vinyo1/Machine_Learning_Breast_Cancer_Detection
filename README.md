@@ -7,6 +7,7 @@ This project involves an analysis of the Breast Cancer Wisconsin (Diagnostic) Da
 - **Source**: [Kaggle](https://www.kaggle.com/datasets/uciml/breast-cancer-wisconsin-data)
 - **Features**: 30 numeric features describing the characteristics of the cell nuclei in images.
 - **Target**: Binary classification - 0 (benign) or 1 (malignant).
+  
 ## About The Dataset
 Features are computed from a digitized image of a fine needle aspirate (FNA) of a breast mass. They describe characteristics of the cell nuclei present in the image.
 n the 3-dimensional space is that described in: [K. P. Bennett and O. L. Mangasarian: "Robust Linear Programming Discrimination of Two Linearly Inseparable Sets", Optimization Methods and Software 1, 1992, 23-34].
