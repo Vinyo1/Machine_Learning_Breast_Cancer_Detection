@@ -242,7 +242,7 @@ This gave an **accuracy of 98.02 %** and a **Standard Deviation of 1.54 %**
 
 
 ## License
-This project is licensed under the MIT License. See the [Lincense](url) file for more details.
+This project is licensed under the MIT License.
 
 
 ## Acknowledgments
