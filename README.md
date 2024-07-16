@@ -63,6 +63,7 @@ Class distribution: 357 benign, 212 malignant
 ## Contributing
 I welcome contributions! Please see `CONTRIBUTING.md` for more details.
 
+## NB//: The full code for this project is in the attached notebook
 ## STEP 1 - Data Preprocessing and Dealing With Missing Values
 ```python
         print(data.head())
