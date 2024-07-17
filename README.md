@@ -227,7 +227,7 @@ data.head()
 
 
 ## Findings and Conclusion
-- Best performing model was the Logistic regression model it had an **accuracy of 97.36 %** and a **Standard Deviation of 1.93 %**
+- The best performing model was the Logistic regression model it had an **accuracy of 97.36 %** and a **Standard Deviation of 1.93 %**
 - The random forest model had an **accuracy of 96.26 % and a Standard Deviation of 2.41 %**
 - After hyper parameter tuning, the best parameter was 
 ```python
@@ -259,6 +259,8 @@ This project is licensed under the MIT License.
 
 ## References
 [Scikit Learn Documentaion](https://scikit-learn.org/stable/)
+
+[Kaggle.com](https://archive.ics.uci.edu/ml/datasets/Breast+Cancer+Wisconsin+%28Diagnostic%29)
 
 ## Acknowledgments
 - [Kaggle](https://www.kaggle.com) for providing the dataset and an indepth description about the dataset
