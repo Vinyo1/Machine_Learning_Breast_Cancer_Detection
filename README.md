@@ -1,9 +1,15 @@
 # Breast Cancer Wisconsin (Diagnostic) Data Analysis
 ## Table of Content
-- [Introduction](https://github.com/Vinyo1/Machine_Learning_Breast_Cancer_Detection/edit/main/README.md/#Introduction)
-- [Data Description](https://github.com/Vinyo1/Machine_Learning_Breast_Cancer_Detection/edit/main/README.md/#Data-Description)
-- [About The Dataset](https://github.com/Vinyo1/Machine_Learning_Breast_Cancer_Detection/edit/main/README.md/#About-The-Dataset)
-- [STEP 1 - Data Preprocessing and Dealing With Missing Values](#step-1-data-preprocessing-and-dealing-with-missing-values)
+- [Introduction](#introduction)
+- [Data Description](#data-description)
+- [About The Dataset](#about-the-dataset)
+- [STEP 1-Data Preprocessing and Dealing With Missing Values](#step-1-data-preprocessing-and-dealing-with-missing-values)
+- [STEP 2-MODEL BUILDING-Logistic Regression](#step-2-model-building-logistic-regression)
+- [STEP 3-Hyper Parameter Tuning Using Randomized SearchCV and GridSearchCV](#step-3-hyper-parameter-tuning-using-randomized-searchcv-and-gridsearchcv)
+- [Step 4-Deciding on The Model-Logistic Regression](step-4-deciding-on-the-model-logistic-regression)
+- [Step 5-Comparing The Report of All Three Models](step-5-comparing-the-report-of-all-three-models)
+- [Findings and Conclusion](findings-and-conclusion)
+  
 ## Introduction
 This project involves an analysis of the Breast Cancer Wisconsin (Diagnostic) Data Set to predict whether the cancer is benign or malignant using various machine learning techniques.
 
@@ -66,7 +72,7 @@ Class distribution: 357 benign, 212 malignant
 I welcome contributions! Please see `CONTRIBUTING.md` for more details.
 
 ## NB//: The full code for this project is in the attached notebook
-## STEP 1 - Data Preprocessing and Dealing With Missing Values
+## STEP 1-Data Preprocessing and Dealing With Missing Values
 ```python
         print(data.head())
         print(data.shape)
@@ -99,14 +105,14 @@ data.head()
     X_train = scaler.fit_transform(X_train)
     X_test = scaler.transform(X_test)
 ```
-## STEP 2 - MODEL BUILDING - Logistic Regression
+## STEP 2-MODEL BUILDING-Logistic Regression
 ```python
         from sklearn.linear_model import LogisticRegression
         lr = LogisticRegression(random_state=42)
         # Fit training data
         lr.fit(X_train, y_train)
 ```
-### 2a -Cross Validation
+### 2a-Cross Validation
 ```python
         accuracies = cross_val_score(estimator = lr, X = X_train, y = y_train, cv = 10)
         print('Accuracy: {:.2f} %'.format(accuracies.mean()*100))
@@ -138,7 +144,7 @@ data.head()
     conf_mat = confusion_matrix(y_test, y_pred)
     conf_mat
 ```
-## STEP 3 - Hyper Parameter Tuning Using Randomized SearchCV and GridSearchCV
+## STEP 3-Hyper Parameter Tuning Using Randomized SearchCV and GridSearchCV
 ``` python
     accuracies = cross_val_score(estimator = rf, X = X_train, y = y_train, cv = 10)
     print(accuracies)
@@ -182,7 +188,7 @@ data.head()
     print("Best score:", grid_search.best_score_)
     print("Best estimator:", grid_search.best_estimator_)
 ```
-## Step 4 - Part 4 Deciding on The Model - Logistic Regression
+## Step 4-Deciding on The Model-Logistic Regression
 ```python
     # Selecting the best parameters for the Logistic Regression-(gRIDsEARCHCV Parameters)
     from sklearn.linear_model import LogisticRegression
@@ -199,7 +205,7 @@ data.head()
     final_regression_results = pd.DataFrame([['Final Logistic Regression', acc, f1, recall, precision, roc_auc]], columns = ['Model', 'Accuracy',
     'F1 Score', 'Recall', 'Precision', 'ROC_AUC'])
 ```
-## Step 5 - Comparing The Report of All Three Models
+## Step 5-Comparing The Report of All Three Models
 ```python
     # Comparing Models
     final_results = pd.concat([lr_results, rf_results, final_regression_results], axis=0).reset_index(drop=True)
@@ -218,9 +224,9 @@ data.head()
 
 
 ## Findings and Conclusion
-Best performing model was the Logistic regression model it had an **accuracy of 97.36 %** and a **Standard Deviation of 1.93 %**
-The random forest model had an **accuracy of 96.26 % and a Standard Deviation of 2.41 %**
-After hyper parameter tuning, the best parameter was 
+- Best performing model was the Logistic regression model it had an **accuracy of 97.36 %** and a **Standard Deviation of 1.93 %**
+- The random forest model had an **accuracy of 96.26 % and a Standard Deviation of 2.41 %**
+- After hyper parameter tuning, the best parameter was 
 ```python
     # Selecting the best parameters for the Logistic Regression-(gRIDsEARCHCV Parameters)
     from sklearn.linear_model import LogisticRegression
@@ -248,7 +254,10 @@ This gave an **accuracy of 98.02 %** and a **Standard Deviation of 1.54 %**
 ## License
 This project is licensed under the MIT License.
 
+## References
+[Scikit Learn Documentaion](https://scikit-learn.org/stable/)
 
 ## Acknowledgments
 - [Kaggle](https://www.kaggle.com) for providing the dataset and an indepth description about the dataset
+  
 
